@@ -24,8 +24,8 @@ class car:
 
     def moving(self, target):
         kp = 1
-        ki = 1
-        kd = 1
+        ki = 0.0001
+        kd = 2
 
 
         # sensor timer simulation
@@ -45,6 +45,7 @@ class car:
 
         if abs(self.VEL)<= 0.3:
             self.VEL = 0
+           
         
         self.RECT.y += self.VEL
         self.last_error = self.error
@@ -63,6 +64,10 @@ while run:
         if event.type == pg.VIDEORESIZE:
             WIDTH, HEIGHT = event.w, event.h
             window = pg.display.set_mode((WIDTH, HEIGHT), pg.RESIZABLE)
+        if event.type == pg.KEYDOWN:
+            if event.key == pg.K_p:
+                plt.plot(Car.movement)
+                plt.show()
     
     
     window.fill((100,100,100))
@@ -79,5 +84,3 @@ while run:
     clock.tick(60)
 
 pg.quit()
-plt.plot(Car.movement)
-plt.show()
