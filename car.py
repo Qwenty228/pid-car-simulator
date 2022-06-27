@@ -76,7 +76,7 @@ class Car(pg.sprite.Sprite):
         self.pre_error = 0
 
     def pid(self, sensors):
-        right, mid, left = sensors
+        right, left = sensors
 
         base_speed = 90
 
@@ -152,7 +152,7 @@ class Car(pg.sprite.Sprite):
 
     def update(self) -> None:
         infrared = []
-        for d in range(-45, 90, 45):
+        for d in range(-45, 90, 90):
             pos, dist = self.check_radar(d)
             infrared.append(dist)
             self.draw_radar(pos)
