@@ -78,15 +78,15 @@ class Car(pg.sprite.Sprite):
     def pid(self, sensors):
         right, mid, left = sensors
 
-        base_speed = 50
+        base_speed = 90
 
-        kp = 1
+        kp = 2.7
         ki = 0
         kd = 0.25
 
         error = right - left
         motor_speed = (kp * error) + (ki * self.sum_error) + (kd * (error - self.pre_error))
-        print(motor_speed)
+        #print(motor_speed)
         self.motor_speed.x = base_speed + motor_speed
         self.motor_speed.y = base_speed - motor_speed
 
@@ -156,11 +156,11 @@ class Car(pg.sprite.Sprite):
             pos, dist = self.check_radar(d)
             infrared.append(dist)
             self.draw_radar(pos)
-            # if dist == 0:
-            #     if self.check_goal():
-            #         print('goal!')
-            #     else:
-            #         self.alive = False
+            if dist == 0:    
+                if self.check_goal():
+                    print('goal!')
+                else:
+                    self.alive = False
    
         self.input()
         self.pid(infrared)
