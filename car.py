@@ -80,7 +80,7 @@ class Car(pg.sprite.Sprite):
 
         base_speed = 90
 
-        kp = 2.7
+        kp = 3.7
         ki = 0
         kd = 0.25
 
