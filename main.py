@@ -15,6 +15,9 @@ class Sim(Window):
         self.visible_objects = pg.sprite.Group()
         self.start()
         self.graph = Graph_Display(300, 60, fps=self.FPS)
+        self.debug = True
+
+        self.frames = []
      
     def start(self):
         self.car = Car(self.data, self.surface, self.visible_objects) 
@@ -30,11 +33,8 @@ class Sim(Window):
         self.visible_objects.draw(self.surface)
         self.visible_objects.update()
 
-    
 
-        if not self.car.alive:
-            self.car.kill()
-            self.start()
+        
 
         if self.debug:
             debug(self.surface, str(self.data))
@@ -49,10 +49,37 @@ class Sim(Window):
 
 
             
-            
+        if not self.car._win:
+            self.frames.append(self.surface.copy())
+
+        if not self.car.alive:
+            self.car.kill()
+            self.start()
 
 
 if __name__ == "__main__":
     data = gen()
     S = Sim(data, 'Simulator')
     S.mainloop()
+    pg.quit()
+
+    import imageio as iio
+    import numpy as np
+
+    
+    writer = iio.get_writer(f"data/vid/car_{S.debug}.gif", fps=24)
+
+    n_frames = len(S.frames)
+    step = int(n_frames / 40)
+
+    for i, frame in enumerate(S.frames):
+        if i % step == 0:
+            frame = pg.surfarray.pixels3d(frame)
+            writer.append_data(np.rot90(frame, 3)[...,::-1,:])
+            print(f"{i}/{n_frames}")
+
+    writer.close()
+
+    
+
+ 
