@@ -11,6 +11,7 @@ class Gen(Window):
         self.draw_goal = False
         #self.goal_surface.fill([0,0,0,100])
         self.tool = 'None'
+        self._quit = True
      
 
         try:
@@ -32,7 +33,7 @@ class Gen(Window):
             if event.key == pg.K_g:
                 self.draw_goal = not self.draw_goal
             if event.key == pg.K_r:
-                self.goal_surface.fill([0, 0,0 ,0 ])
+                self.goal_surface.fill([0, 0, 0 ,0 ])
      
                
 
@@ -48,8 +49,10 @@ class Gen(Window):
                 pg.draw.circle(self.goal_surface, 'red', [int(i/2) for i in pg.mouse.get_pos()], 5)
         else: self.tool = "None"
         self.surface.blit(self.goal_surface, (0, 0))
+        pg.draw.circle(self.surface, "black", self.data['pos'], 10)
 
-        debug(self.surface, self.tool)
+        debug(self.surface, f'pressed s to set car spawn location, g to {"disable" if self.draw_goal else "enable"} goal tool, r to clear everything, m for debug',
+            x=0, y=0)
         if self.debug:
             debug(self.surface, self.data, y=40)
             _ = self.goal_surface.copy()

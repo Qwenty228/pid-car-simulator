@@ -1,14 +1,15 @@
 import pygame as pg
 import os
 
-__all__ = ['MAP_IMAGE', 'Window', "CAR_PATH", "CONFIG_PATH", "MAP_PATH"]
+__all__ = ['MAP_IMAGE', 'Window', "CAR_PATH", "CONFIG_PATH", "MAP_PATH", "MAP"]
 
 
 CAR_PATH = "data\cars"
 CONFIG_PATH = "data\configs"
 MAP_PATH = "data\maps"
+MAP =  'map3.png'
 
-MAP_IMAGE = pg.image.load(os.path.join(MAP_PATH, 'map.png'))
+MAP_IMAGE = pg.image.load(os.path.join(MAP_PATH, MAP))
 
 
 class Window:
@@ -23,6 +24,8 @@ class Window:
         self.surface = pg.Surface(self.MAP_SIZE)
         self._screen = pg.display.set_mode([self.ratio*i for i in self.MAP_SIZE])
         self.Clock = pg.time.Clock()
+
+        self._quit = False
         
         self.set_caption(self.title)
 
@@ -39,10 +42,15 @@ class Window:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.running = False
+                if self._quit:
+                    pg.quit()
+                    quit()
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_m:
                     self.debug = not self.debug
                     self.set_caption(self.title)
+                if event.key == pg.K_RETURN:
+                    self.running = False
             
             if hasattr(self, "event"):
                 self.event(event)

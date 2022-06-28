@@ -5,7 +5,7 @@ from collections import deque, defaultdict
 import numpy as np
 
 pg.init()
-font = pg.font.Font(None, 30)
+font = pg.font.Font(None, 25)
 
 def debug(display_surface, info: str, y:int = 10, x: int = 10):
     """draw debug text"""
