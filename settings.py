@@ -13,7 +13,7 @@ MAP_IMAGE = pg.image.load(os.path.join(MAP_PATH, 'map.png'))
 
 class Window:
     MAP_SIZE = MAP_IMAGE.get_size()
-    FPS = 60
+    FPS = 120
     bg = None
     def __init__(self, title:str=None) -> None:
         pg.init()
@@ -44,8 +44,9 @@ class Window:
                     self.debug = not self.debug
                     self.set_caption(self.title)
             
-            if getattr(self, "event"):
+            if hasattr(self, "event"):
                 self.event(event)
+
 
 
     def mainloop(self):

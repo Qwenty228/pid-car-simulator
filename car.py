@@ -1,4 +1,6 @@
 from abc import abstractproperty
+import time
+from xml.sax.handler import property_encoding
 import pygame as pg
 from settings import *
 import os
@@ -14,6 +16,56 @@ def tl():
 def tr():
     return 0, 100
 
+class PID:
+    def __init__(self, kp, ki, kd) -> None:
+        self.p = kp
+        self.i = ki
+        self.d = kd
+
+        self.sum_error = 0
+        self.pre_error = 0
+        self.error = 0
+
+        self.res = 0
+
+        self.proportional = 0
+        self.integral = 0 
+        self.derivative = 0
+
+    @property
+    def proportional(self):
+        return self._proportional * self.p
+    @proportional.setter
+    def proportional(self, value):
+        self._proportional = value
+
+    @property
+    def integral(self):
+        return self._integral * self.i
+    @integral.setter
+    def integral(self, value):
+        self._integral = value
+    
+    @property
+    def derivative(self):
+        return self._derivative * self.d
+    @derivative.setter
+    def derivative(self, value):
+        self._derivative = value
+
+    def calculate(self, error):
+        self.proportional = error
+        self.integral = self.sum_error
+        self.derivative = error - self.pre_error
+        
+        self.res = self.proportional + self.integral + self.derivative
+
+        self.pre_error = error
+        self.sum_error += error
+        return self.res
+
+last_time = 0
+
 class Car(pg.sprite.Sprite):
     def __init__(self, data, surf,  *groups: abstractproperty) -> None:
         super().__init__(*groups)
@@ -21,7 +73,6 @@ class Car(pg.sprite.Sprite):
         self.sim_surface = surf
         self.data = data
         pos = data['pos']
-        self.debug = False
 
         self._image = pg.image.load(os.path.join(CAR_PATH, 'debug.png')).convert_alpha()
         self._image = pg.transform.scale(self._image, (35, int(35*(self._image.get_height()/self._image.get_width()))))
@@ -35,10 +86,12 @@ class Car(pg.sprite.Sprite):
         self.angle = 0
 
         self.alive = True
+        self._win = False
         self.goal = None
 
-        self._init_pid()
+        self.feedback_control = PID(3, 0.01, 1)
         self.check_goal()
+      
 
     @staticmethod
     def blitRotate(image, pos, originPos, angle):
@@ -70,42 +123,42 @@ class Car(pg.sprite.Sprite):
         else:
             self.motor_speed *= 0.9 if self.motor_speed.magnitude() > 1 else 0
 
-
-    def _init_pid(self):
-        self.sum_error = 0
-        self.pre_error = 0
-
-    def pid(self, sensors):
+    def ai(self, sensors):
         right, left = sensors
 
-        base_speed = 90
-
-        kp = 3.7
-        ki = 0
-        kd = 0.25
+        base_speed = 60
 
         error = right - left
-        motor_speed = (kp * error) + (ki * self.sum_error) + (kd * (error - self.pre_error))
-        #print(motor_speed)
-        self.motor_speed.x = base_speed + motor_speed
-        self.motor_speed.y = base_speed - motor_speed
+        d_speed =  self.feedback_control.calculate(error)
 
+        self.motor_speed.x = min(base_speed + d_speed, 100)
+        self.motor_speed.y = min(base_speed - d_speed, 100) 
 
+        
 
-        self.pre_error = error
-        self.sum_error += error
 
     def move(self):
-
+        global last_time
+       
         diff = (self.motor_speed.x - self.motor_speed.y)
         if abs(diff) < 3:
             diff = 0
         self.angle = (self.angle + diff / (self.image.get_height()*0.5)) % 360
 
+        dt = time.time() - last_time
+        dt *= 60 # dt = fps * deltatime ---> normalize --> fps * deltatime * default_fps / fps
+        if dt > 1000:
+            dt = 0
+
+        last_time = time.time()
 
         # print(, self._image.get_rect().top, self._image.get_rect().bottom)
+        #print(self.motor_speed)
 
-        speed = (self.motor_speed.x + self.motor_speed.y)/50
+    
+
+        speed = (self.motor_speed.x + self.motor_speed.y)*0.05 * dt
+
         self.pos.x += speed * math.cos(math.radians(-self.angle))
         self.pos.y -= speed * math.sin(math.radians(-self.angle))
 
@@ -153,20 +206,28 @@ class Car(pg.sprite.Sprite):
     def update(self) -> None:
         infrared = []
         for d in range(-45, 90, 90):
+            if self.check_goal():
+                self._win = True
+                break
             pos, dist = self.check_radar(d)
             infrared.append(dist)
             self.draw_radar(pos)
             if dist == 0:    
-                if self.check_goal():
-                    print('goal!')
-                else:
-                    self.alive = False
+                self.alive = False
    
-        self.input()
-        self.pid(infrared)
-        self.move()
-                    
+        if not self._win:
+            self.input()
+            self.ai(infrared)
+            self.move()
+        else:
+            self.alive = False
+            #print('goal')
+
+      
+            
      
         return super().update()
+
+
 
 
