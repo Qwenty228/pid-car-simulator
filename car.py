@@ -89,10 +89,17 @@ class Car(pg.sprite.Sprite):
         self._win = False
         self.goal = None
 
-        self.feedback_control = PID(3, 0.01, 1)
+        self.feedback_control = PID(self.Kp, self.Ki, self.Kd)  # map0 doesnt work with this PID(3, 0.01, 1) 
         self.check_goal()
         self.turn = 'straight'
       
+    @property
+    def Kp(self):   return 3.5
+    @property
+    def Ki(self):   return 1.5
+    @property
+    def Kd(self):   return -0.5
+
 
     @staticmethod
     def blitRotate(image, pos, originPos, angle):
@@ -185,7 +192,7 @@ class Car(pg.sprite.Sprite):
 
      
 
-        while (self.map.get_at((x, y)) == (179, 179, 179, 255) or self.goal.sprite.image.get_at((x, y)) == (255, 0, 0, 255)) and length < 50:
+        while (self.map.get_at((x, y)) == (179, 179, 179, 255) or self.goal.sprite.image.get_at((x, y)) == (255, 0, 0, 255)) and length < 70:
             length += 1
             x = int(self.rect.center[0] + math.cos(math.radians(360 - (-self.angle + degree))) * length)
             y = int(self.rect.center[1] + math.sin(math.radians(360 - (-self.angle + degree))) * length)

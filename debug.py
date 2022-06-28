@@ -45,8 +45,8 @@ class Graph_Display:
 
         surface.fill('black')
         surface.blit(self.text('0', 0x93D3FF), (int(self.size/20), mid))
-        surface.blit(self.text('100', 0x93D3FF), (int(self.size/30), highest))
-        surface.blit(self.text('-100', 0x93D3FF), (int(self.size/60), lowest))
+        surface.blit(self.text('200', 0x93D3FF), (int(self.size/30), highest))
+        surface.blit(self.text('-200', 0x93D3FF), (int(self.size/60), lowest))
 
         pg.draw.rect(surface,0x27A7FF, border, width=self.line_thicc)
         r = lambda: random.randint(0,255)
@@ -61,7 +61,7 @@ class Graph_Display:
 
         for i, (key, value) in enumerate(iter_y.items()):
             self._graph[key].append(value)
-            lines = [(self.size/8 + (i*self.gap), int(self.size/3 + np.interp(y, [-100, 100], [-1*self.high, self.high]))) for i, y in enumerate(self._graph[key])]
+            lines = [(self.size/8 + (i*self.gap), int(self.size/3 + np.interp(y, [-200, 200], [-1*self.high, self.high]))) for i, y in enumerate(self._graph[key])]
             #print(lines[-3:])
             if key == 'pid':
                 self.color[i] = 'white'

@@ -7,7 +7,7 @@ __all__ = ['MAP_IMAGE', 'Window', "CAR_PATH", "CONFIG_PATH", "MAP_PATH", "MAP"]
 CAR_PATH = "data\cars"
 CONFIG_PATH = "data\configs"
 MAP_PATH = "data\maps"
-MAP =  'map3.png'
+MAP =  'map4.png'
 
 MAP_IMAGE = pg.image.load(os.path.join(MAP_PATH, MAP))
 
