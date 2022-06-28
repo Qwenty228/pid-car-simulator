@@ -91,6 +91,7 @@ class Car(pg.sprite.Sprite):
 
         self.feedback_control = PID(3, 0.01, 1)
         self.check_goal()
+        self.turn = 'straight'
       
 
     @staticmethod
@@ -134,7 +135,6 @@ class Car(pg.sprite.Sprite):
         self.motor_speed.x = min(base_speed + d_speed, 100)
         self.motor_speed.y = min(base_speed - d_speed, 100) 
 
-        
 
 
     def move(self):
@@ -143,6 +143,15 @@ class Car(pg.sprite.Sprite):
         diff = (self.motor_speed.x - self.motor_speed.y)
         if abs(diff) < 3:
             diff = 0
+
+        if abs(diff) < 50:
+            self.turn = 'straight'
+        elif diff > 0:
+            self.turn = 'right'
+        else:
+            self.turn = 'left'
+     
+
         self.angle = (self.angle + diff / (self.image.get_height()*0.5)) % 360
 
         dt = time.time() - last_time

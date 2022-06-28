@@ -38,7 +38,7 @@ class Sim(Window):
 
         if self.debug:
             debug(self.surface, str(self.data))
-            
+            debug(self.surface, str(self.car.turn), y=40)
             self.surface.blit(self.graph.draw(p=self.car.feedback_control.proportional, 
                                             i=self.car.feedback_control.integral, 
                                             d=self.car.feedback_control.derivative,
