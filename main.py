@@ -49,7 +49,7 @@ class Sim(Window):
             debug(self.surface, str(self.car.turn), y=30)
             debug(self.surface, f'KP={self.car.Kp}, KI={self.car.Ki}, KD={self.car.Kd}', y=50)
             influence = {'p':self.car.feedback_control.proportional, 'i':self.car.feedback_control.integral, 'd':self.car.feedback_control.derivative}
-            debug(self.surface, f'most influence: {max(influence.items(), key=lambda item: abs(item[1]))}', y=50)
+            debug(self.surface, f'most influence: {max(influence.items(), key=lambda item: abs(item[1]))}', y=70)
             self.surface.blit(self.graph.draw(p=influence['p'], 
                                             i=influence['i'], 
                                             d=influence['d'],
@@ -69,22 +69,22 @@ if __name__ == "__main__":
     S.mainloop()
     pg.quit()
 
-    # import imageio as iio
-    # import numpy as np
+    import imageio as iio
+    import numpy as np
 
     
-    # writer = iio.get_writer(f"data/vid/{MAP.split('.')[0]}_debug_{S.debug}.gif", fps=24)
+    writer = iio.get_writer(f"data/vid/{MAP.split('.')[0]}_debug_{S.debug}.gif", fps=24)
 
-    # n_frames = len(S.frames)
-    # step = int(n_frames / 200)
+    n_frames = len(S.frames)
+    step = int(n_frames / 200)
 
-    # for i, frame in enumerate(S.frames):
-    #     if i % step == 0:
-    #         frame = pg.surfarray.pixels3d(frame)
-    #         writer.append_data(np.rot90(frame, 3)[...,::-1,:])
-    #         print(f"{i}/{n_frames}")
+    for i, frame in enumerate(S.frames):
+        if i % step == 0:
+            frame = pg.surfarray.pixels3d(frame)
+            writer.append_data(np.rot90(frame, 3)[...,::-1,:])
+            print(f"{i}/{n_frames}")
 
-    # writer.close()
+    writer.close()
 
     
 
