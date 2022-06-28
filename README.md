@@ -10,5 +10,7 @@ I really want to do a lot more with this algorithm but my knowledge is not enoug
 <img src="https://user-images.githubusercontent.com/68010275/176211568-e0b61f76-09e8-48ee-b329-f57ab7a1646f.gif">
 
 <h3><i>PID Car w/ debug</i></h3>
-<img src="https://user-images.githubusercontent.com/68010275/176211579-45df970b-770f-47a5-979f-cd4ee1183335.gif">
+<div><img src="https://user-images.githubusercontent.com/68010275/176211579-45df970b-770f-47a5-979f-cd4ee1183335.gif"></div>
+
+<div><img src="https://user-images.githubusercontent.com/68010275/176230254-b7059e64-ae40-4fdd-9087-4e3c94422135.gif"></div>
 
