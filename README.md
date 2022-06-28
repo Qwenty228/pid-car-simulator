@@ -15,9 +15,10 @@ I really want to do a lot more with this algorithm but my knowledge is not enoug
 <div><img src="https://user-images.githubusercontent.com/68010275/176230254-b7059e64-ae40-4fdd-9087-4e3c94422135.gif"></div>
 
 
-<p><big><bold>Conclusion 29-6-2022</big></bold>
-Error is the different between distances of 2 car front sensors and wall. 
-More P results in large angle change.
-More I results in less turning radius (residual error in this case is the turning radius).
-More D results in less oscillation.
+<p>
+<div><big><bold>Conclusion 29-6-2022</big></bold></div>
+<div>Error is the different between distances of 2 car front sensors and wall. </div>
+<div>More P results in large angle change.</div>
+<div>More I results in less turning radius (residual error in this case is the turning radius).</div>
+<div>More D results in less oscillation.</div>
 </p>
