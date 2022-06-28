@@ -1,5 +1,5 @@
 # PID car simulator
-I used to participated in robotic competitions serveral years ago and I learnt about pid algorithm.
+I used to participated in robotic competitions serveral years ago and I had a change to learn about pid algorithm.
 I really want to do a lot more with this algorithm but my knowledge is not enough so I just create this instead.
 
 
