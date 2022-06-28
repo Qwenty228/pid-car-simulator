@@ -23,4 +23,4 @@ I really want to do a lot more with this algorithm but my knowledge is not enoug
 <div>More D results in less oscillation.</div>
 </p>
 
-<img src="https://user-images.githubusercontent.com/68010275/176248854-0e485d6a-f908-46b8-be22-44135515ed87.gif">
+<img src="https://user-images.githubusercontent.com/68010275/176249387-49688cc7-1626-497f-aa76-383fa5a85822.gif">
