@@ -3,6 +3,8 @@ A proportional–integral–derivative controller (PID controller or three-term 
 
 In this simulation, PID is used to control the speed of each side of the car(tank steerimg system) by using the distance between the car and wall as the 'error'.
 
+This algorithm is very useful for line following robot. Due to the damping effect from Derivative term, the robot can traverse curve path rapidly and steadily. 
+
 <!-- https://user-images.githubusercontent.com/68010275/175910885-4e553675-5ced-493a-84be-5d449cd8ea18.mp4 -->
 
 <h3><i>PID Car</i></h3>
