@@ -1,8 +1,7 @@
 # PID car simulator
-I used to participated in robotic competitions serveral years ago and I had a chance to learn about pid algorithm.
-I really want to do a lot more with this algorithm but my knowledge is not enough so I just create this instead.
+A proportional–integral–derivative controller (PID controller or three-term controller) is a control loop mechanism employing feedback that is widely used in industrial control systems and a variety of other applications requiring continuously modulated control.
 
-
+In this simulation, PID is used to control the speed of each side of the car(tank steerimg system) by using the distance between the car and wall as the 'error'.
 
 <!-- https://user-images.githubusercontent.com/68010275/175910885-4e553675-5ced-493a-84be-5d449cd8ea18.mp4 -->
 
